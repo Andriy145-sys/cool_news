@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-card-title>Recent news</v-card-title>
     <posts-list type="main" :posts="posts" />
     <v-pagination v-model="page" :length="pageCount" circle color="green" />
   </div>

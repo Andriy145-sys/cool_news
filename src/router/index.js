@@ -14,6 +14,16 @@ const routes = [
         name: 'profile',
         component: () => import('@/views/ProfileView/Profile.vue'),
     },
+    {
+        path: '/sign_up',
+        name: 'sign_up',
+        component: () => import('@/views/AuthView/signUp.vue'),
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/AuthView/Login.vue'),
+    },
 ]
 
 const router = new VueRouter({
