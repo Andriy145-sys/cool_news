@@ -19,6 +19,7 @@
         @close="visibleMainModal = !visibleMainModal"
       />
       <add-new-post-modal
+        isEdit="true"
         :post="postDetail"
         :visible="visibleProfileModal"
         @close="visibleProfileModal = !visibleProfileModal"

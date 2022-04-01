@@ -8,7 +8,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-icon v-bind="attrs" v-on="on"> mdi-account </v-icon>
       </template>
-      <v-list>
+      <v-list dense>
         <v-list-item-group v-model="selectedItem" color="primary">
           <v-list-item
             v-for="(profileItem, index) in profileDropDown"

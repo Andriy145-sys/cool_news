@@ -1,7 +1,7 @@
 <template>
   <div>
     <posts-list type="main" :posts="posts" />
-    <v-pagination v-model="page" :length="6" circle color="green" />
+    <v-pagination v-model="page" :length="pageCount" circle color="green" />
   </div>
 </template>
 
@@ -13,6 +13,7 @@ export default {
   },
   data: () => ({
     page: 1,
+    pageCount: 6,
     posts: [
       {
         _id: 1,
