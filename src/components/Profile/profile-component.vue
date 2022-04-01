@@ -1,6 +1,6 @@
 <template>
   <v-card>
-      <v-card-title>Holinskiy Andriy</v-card-title>
+      <v-card-title class="ml-5">Holinskiy Andriy</v-card-title>
        <v-tabs
           show-arrows
           centered
