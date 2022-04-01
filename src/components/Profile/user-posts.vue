@@ -1,7 +1,13 @@
 <template>
   <div>
-    <posts-list type="main" :posts="posts" />
-    <v-pagination v-model="page" :length="6" circle color="green" />
+    <v-col>
+      <v-row class="px-5 mb-5" align="center">
+        <v-card-title>Your posts</v-card-title>
+        <v-spacer />
+        <v-btn outlined color="green">Add new post</v-btn></v-row
+      >
+      <posts-list class="px-10" type="profile" :posts="posts" />
+    </v-col>
   </div>
 </template>
 
@@ -12,7 +18,6 @@ export default {
     postsList,
   },
   data: () => ({
-    page: 1,
     posts: [
       {
         _id: 1,
@@ -24,17 +29,6 @@ export default {
         title: "Cool news",
         text: "TextText dsahdsajdghjsagdhsgadgjsgdjashgdjsagdhsagjd",
       },
-      {
-        _id: 3,
-        title: "Cool news",
-        text: "TexText dsahdsajdghjsagdhsgadgjsgdjashgdjsagdhsagjdt",
-      },
-      {
-        _id: 4,
-        title: "Cool news",
-        text: "TText dsahdsajdghjsagdhsgadgjsgdjashgdjsagdhsagjdext",
-      },
-      { _id: 5, title: "Cool news", text: "Text" },
     ],
   }),
 };

@@ -1,10 +1,10 @@
 <template>
   <v-app-bar dense class="app-bar">
     <router-link to="/"
-      ><v-app-bar-title><h3>Cool news</h3></v-app-bar-title></router-link
+      ><v-app-bar-title>Cool news</v-app-bar-title></router-link
     >
     <v-spacer></v-spacer>
-    <v-menu offset-y class="menu">
+    <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-icon v-bind="attrs" v-on="on"> mdi-account </v-icon>
       </template>
@@ -73,8 +73,5 @@ export default {
 a {
   color: black;
   text-decoration: none;
-}
-.menu {
-  margin-top: 10px !important;
 }
 </style>

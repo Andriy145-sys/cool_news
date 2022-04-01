@@ -15,8 +15,13 @@
       </v-col>
       <post-detail-modal
         :post="postDetail"
-        :visible="visible"
-        @close="visible = !visible"
+        :visible="visibleMainModal"
+        @close="visibleMainModal = !visibleMainModal"
+      />
+      <add-new-post-modal
+        :post="postDetail"
+        :visible="visibleProfileModal"
+        @close="visibleProfileModal = !visibleProfileModal"
       />
     </v-row>
   </div>
@@ -24,27 +29,38 @@
 
 <script>
 import postDetailModal from "@/components/Main/post-detail-modal";
+import addNewPostModal from "@/components/Profile/add-new-post-modal";
 export default {
   components: {
     postDetailModal,
+    addNewPostModal,
   },
   data: () => ({
-    visible: false,
+    visibleMainModal: false,
+    visibleProfileModal: false,
     postDetail: {},
   }),
   props: {
     posts: {
       require: true,
     },
+    type: {
+      require: true,
+    },
   },
   methods: {
     async getDetailPost(id) {
       this.postDetail = {
-          title: 'Col',
-          text: 'twfsdsfdsfdsfdf'
+        title: "Col",
+        text: "twfsdsfdsfdsfdf",
       };
-      console.log(id)
-      this.visible = true;
+      console.log(id);
+      if (this.type === "main") {
+        this.visibleMainModal = true;
+      }
+      if (this.type === "profile") {
+        this.visibleProfileModal = true;
+      }
     },
   },
 };
