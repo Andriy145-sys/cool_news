@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 export default {
   name: "appHeader",
   data: () => ({
@@ -63,6 +64,9 @@ export default {
       console.log("log");
     },
   },
+  computed: {
+    ...mapGetters(['loggedUser'])
+  }
 };
 </script>
 

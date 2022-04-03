@@ -65,7 +65,7 @@ export default {
     },
   },
   methods: {
-    signUp() {
+    login() {
       this.$v.$touch();
       if (!this.$v.user.$invalid) {
         console.log("work");

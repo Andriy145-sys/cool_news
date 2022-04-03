@@ -11,8 +11,11 @@
           placeholder="Type here..."
           label="Username"
           v-model="user.username"
-          :error-messages="usernameError"
+          :error-messages="
+            usernameError.lenght ? usernameError : usernameErrorMsg
+          "
           @blur="$v.user.username.$touch()"
+          @input="usernameErrorMsg"
         />
         <v-text-field
           color="green"
@@ -42,8 +45,9 @@
           label="Email"
           autocomplete="email"
           v-model="user.email"
-          :error-messages="emailError"
+          :error-messages="emailError.lenght ? emailError : emailErrorMsg"
           @blur="$v.user.email.$touch()"
+          @input="emailErrorMsg = []"
         />
         <v-text-field
           color="green"
@@ -56,7 +60,9 @@
           :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="passwordVisible = !passwordVisible"
           :error-messages="passwordError"
-          :hide-details="password.password !== '' && password.password.lenght >= 8"
+          :hide-details="
+            password.password !== '' && password.password.lenght >= 8
+          "
           @blur="$v.password.password.$touch()"
         />
         <password-helper :password="password.password" />
@@ -98,6 +104,8 @@ export default {
     password: {
       password: "",
     },
+    emailErrorMsg: [],
+    usernameErrorMsg: [],
     currentPasswordVisible: false,
     passwordVisible: false,
     confirmPasswordVisible: false,
@@ -134,16 +142,31 @@ export default {
       const userData = [];
       if (!this.$v.user.$invalid) {
         userData.email = this.user.email;
-        if(this.user.first_name){
-          userData.first_name = this.user.first_name
+        if (this.user.first_name) {
+          userData.first_name = this.user.first_name;
         }
-        if(this.user.last_name){
-          userData.last_name = this.user.last_name
+        if (this.user.last_name) {
+          userData.last_name = this.user.last_name;
         }
-        userData.username = this.user.username
-        userData.password = this.password.password
-        await authService.sign_up({ ...userData });
-        this.$router.push('/login')
+        userData.username = this.user.username;
+        userData.password = this.password.password;
+        const response = await authService.sign_up({ ...userData });
+        if (response.status === 401 && response.error.type === "Unique email") {
+          this.emailErrorMsg.push(
+            "The email field must contain a unique value"
+          );
+        }
+        if (
+          response.status === 401 &&
+          response.error.type === "Unique username"
+        ) {
+          this.usernameErrorMsg.push(
+            "The username field must contain a unique value"
+          );
+        }
+        if (response.status === 200) {
+          this.$router.push("/login");
+        }
       }
     },
   },

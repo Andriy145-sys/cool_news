@@ -1,13 +1,13 @@
 export default {
 	state: {
-	  loggedUser: null
+	  loggedUser: ''
 	},
 	mutations: {
 	  setLoggedUser(state, loggedUser) {
 		state.loggedUser = loggedUser
 	  },
 	  clearUserLogged(state) {
-		state.loggedUser = null
+		state.loggedUser = ''
 	  },
 	},
 	actions: {
