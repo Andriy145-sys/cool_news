@@ -46,6 +46,9 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
+import authService from "@/request/requests/authService";
+import userService from "@/request/requests/userService";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "loginComponent",
   mixins: [validationMixin],
@@ -65,14 +68,31 @@ export default {
     },
   },
   methods: {
-    login() {
+    ...mapActions(["updateInfo"]),
+    async login() {
       this.$v.$touch();
       if (!this.$v.user.$invalid) {
-        console.log("work");
+        const userData = [];
+        userData.email = this.user.email;
+        userData.password = this.user.password;
+        const response = await authService.login({ ...userData });
+        console.log(response);
+        if (response.status == 200) {
+          console.log(response.result._id);
+          const profileRes = await userService.getUserById(response.result._id);
+          console.log(profileRes);
+          this.updateInfo({
+            userId: profileRes.result._id,
+            username: profileRes.result.email,
+          });
+          console.log(this.loggedUser);
+          this.$router.push("/");
+        }
       }
     },
   },
   computed: {
+    ...mapGetters(['loggedUser']),
     emailError() {
       const errors = [];
       if (!this.$v.user.email.$dirty) {

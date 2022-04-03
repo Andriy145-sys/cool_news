@@ -4,7 +4,7 @@
       ><v-app-bar-title>Cool news</v-app-bar-title></router-link
     >
     <v-spacer></v-spacer>
-    <v-menu offset-y>
+    <v-menu offset-y v-if="loggedUser">
       <template v-slot:activator="{ on, attrs }">
         <v-icon v-bind="attrs" v-on="on"> mdi-account </v-icon>
       </template>
@@ -23,11 +23,18 @@
         </v-list-item-group>
       </v-list>
     </v-menu>
+    <v-row v-else>
+      <v-spacer></v-spacer>
+      <div style="margin-right: 20px;">
+        <router-link to="/sign_up">Sign up</router-link> | 
+       <router-link to="/login">Sign in</router-link>
+      </div>
+    </v-row> 
   </v-app-bar>
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 export default {
   name: "appHeader",
   data: () => ({
@@ -46,6 +53,7 @@ export default {
     ],
   }),
   methods: {
+    ...mapActions(['updateInfo']),
     goTo(path) {
       switch (path) {
         case "profile":
@@ -61,7 +69,8 @@ export default {
       }
     },
     async logout() {
-      console.log("log");
+      this.$store.commit("clearUserLogged");
+      this.$router.push('/login')
     },
   },
   computed: {

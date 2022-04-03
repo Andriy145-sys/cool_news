@@ -1,13 +1,14 @@
 export default {
+	/* eslint-disable no-mixed-spaces-and-tabs */
 	state: {
-	  loggedUser: ''
+	  loggedUser: null
 	},
 	mutations: {
 	  setLoggedUser(state, loggedUser) {
 		state.loggedUser = loggedUser
 	  },
 	  clearUserLogged(state) {
-		state.loggedUser = ''
+		state.loggedUser = null
 	  },
 	},
 	actions: {
