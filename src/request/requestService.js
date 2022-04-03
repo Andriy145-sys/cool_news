@@ -1,6 +1,4 @@
 import axios from 'axios';
-import store from '@/store';
-import router from '@/router';
 
 const API_ENDPOINT = 'http://localhost:8000'
 
@@ -11,7 +9,6 @@ export default {
         API_ENDPOINT + url,
         {
           params,
-          headers,
         },
       );
     },

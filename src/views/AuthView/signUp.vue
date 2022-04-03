@@ -50,13 +50,13 @@
           dense
           outlined
           placeholder="Type here..."
-          label="New password"
+          label="Password"
           v-model="password.password"
           :type="passwordVisible ? 'text' : 'password'"
           :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="passwordVisible = !passwordVisible"
           :error-messages="passwordError"
-          :hide-details="password.password !== ''"
+          :hide-details="password.password !== '' && password.password.lenght >= 8"
           @blur="$v.password.password.$touch()"
         />
         <password-helper :password="password.password" />
@@ -73,8 +73,13 @@
           :error-messages="confirmPasswordError"
           @blur="$v.password.confirm_password.$touch()"
         />
-        <v-btn class="mb-5" dark color="green" @click="signUp">sign Up</v-btn><br>
-        <span>Have account?<router-link to="/login">&nbsp;Sign in</router-link></span>
+        <v-btn class="mb-5" dark color="green" @click="signUp">sign Up</v-btn
+        ><br />
+        <span
+          >Have account?<router-link to="/login"
+            >&nbsp;Sign in</router-link
+          ></span
+        >
       </v-col>
     </v-row>
   </v-card>
@@ -84,6 +89,7 @@
 import { validationMixin } from "vuelidate";
 import { required, sameAs, email } from "vuelidate/lib/validators";
 import passwordHelper from "@/components/UI/password-helper.vue";
+import authService from "@/request/requests/authService";
 export default {
   components: { passwordHelper },
   mixins: [validationMixin],
@@ -123,10 +129,21 @@ export default {
     },
   },
   methods: {
-    signUp() {
+    async signUp() {
       this.$v.$touch();
+      const userData = [];
       if (!this.$v.user.$invalid) {
-        console.log("work");
+        userData.email = this.user.email;
+        if(this.user.first_name){
+          userData.first_name = this.user.first_name
+        }
+        if(this.user.last_name){
+          userData.last_name = this.user.last_name
+        }
+        userData.username = this.user.username
+        userData.password = this.password.password
+        await authService.sign_up({ ...userData });
+        this.$router.push('/login')
       }
     },
   },
