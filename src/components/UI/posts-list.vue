@@ -1,6 +1,14 @@
 <template>
   <div>
-    <v-row style="justify: space-between">
+    <div v-if="showLoader" class="d-flex align-center">
+      <v-progress-circular
+        v-if="showLoader"
+        class="mx-auto"
+        indeterminate
+        color="green"
+      ></v-progress-circular>
+    </div>
+    <v-row v-else style="justify: space-between">
       <v-col cols="6" lg="3" v-for="post in posts" :key="post._id">
         <v-card evalution="10" @click="getDetailPost(post._id)">
           <v-img
@@ -13,14 +21,14 @@
           </v-card-text>
 
           <v-card-subtitle class="px-5">
-             <v-row justify="end">
-            <span>
-              {{ post.date_of_create }}
-            </span>
-          </v-row>
-          <v-row justify="start"
-            ><span> Author: {{ post.author_username }} </span>
-          </v-row>
+            <v-row justify="end">
+              <span>
+                {{ post.date_of_create }}
+              </span>
+            </v-row>
+            <v-row justify="start"
+              ><span> Author: {{ post.author_username }} </span>
+            </v-row>
           </v-card-subtitle>
         </v-card>
       </v-col>
@@ -61,6 +69,9 @@ export default {
     type: {
       require: true,
     },
+    showLoader: {
+      require: true,
+    },
   },
   methods: {
     async getDetailPost(id) {
@@ -81,7 +92,7 @@ export default {
 <style>
 .text {
   width: 100%;
-  overflow:hidden;
+  overflow: hidden;
   line-height: 2rem;
   max-height: 4rem;
   -webkit-box-orient: vertical;
@@ -90,5 +101,8 @@ export default {
   overflow: hidden !important;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
+}
+.test:hover {
+  color: blue;
 }
 </style>

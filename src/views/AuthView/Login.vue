@@ -4,7 +4,7 @@
   >
     <v-card elevation="10" class="mb-5">
       <v-row justify="center">
-        <v-col align-self="center" cols="6" lg="10">
+        <v-col align-self="center" cols="10" lg="10">
           <h3 class="mb-5">Login</h3>
           <v-text-field
             color="green"

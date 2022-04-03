@@ -9,12 +9,12 @@ export default {
 		const response = await requestService.post(`/posts/${id}`, data)
 		return response?.data
 	},
-    async getAllPosts(){
-		const response = await requestService.get(`/posts`)
+    async getAllPosts(page){
+		const response = await requestService.get(`/posts/${page}`)
 		return response?.data
 	},
-	async getPostsByAuthor(id){
-		const response = await requestService.get(`/posts/${id}/posts`)
+	async getPostsByAuthor(id,page){
+		const response = await requestService.get(`/posts/${id}/posts/${page}`)
 		return response?.data
 	},
 	async getPostById(id){

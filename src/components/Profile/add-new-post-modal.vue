@@ -35,9 +35,11 @@
             <v-btn v-if="!isEdit" color="green" dark @click="createNewPost">
               Create
             </v-btn>
-            <v-btn v-else color="green" dark @click="updatePost">
-              Update
-            </v-btn>
+            <v-row v-else justify="end">
+              {{posts._id}}
+              <v-btn color="red" dark @click="deletePost(posts._id)" class="mr-5"> Delete </v-btn>
+              <v-btn color="green" dark @click="updatePost"> Update </v-btn>
+            </v-row>
           </v-row>
         </v-card-actions>
       </v-card>
@@ -48,6 +50,7 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
+import postsService from '@/request/requests/postsService';
 export default {
   mixins: [validationMixin],
   data: () => ({
@@ -77,6 +80,7 @@ export default {
   mounted() {
     if (this.isEdit) {
       this.posts = this.post;
+      console.log(this.posts);
     }
   },
   methods: {
@@ -96,6 +100,10 @@ export default {
         this.$emit("close");
       }
     },
+    async deletePost(id) {
+      await postsService.deletePost(id)
+      this.$emit('close')
+    }
   },
   computed: {
     visibility: {

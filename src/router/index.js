@@ -39,8 +39,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log(to.matched.some(record => record.meta.requiresLogin))
-    console.log(store.getters.loggedUser == null)
     if (to.matched.some(record => record.meta.requiresLogin) && store.getters.loggedUser == null) {
         next({ name: 'login' })
     }
