@@ -1,12 +1,12 @@
 import requestService from '../requestService';
 
 export default {
-	async update(id,data){
+	async updateUserData(id,data){
 		const response = await requestService.post(`/user/update/${id}`, data)
 		return response?.data
 	},
 	async changePassword(id,data){
-		const response = await requestService.post(`/user/changePassword/${id}`, data)
+		const response = await requestService.post(`/user/change_password/${id}`, data)
 		return response?.data
 	},
 	async getUserById(id){

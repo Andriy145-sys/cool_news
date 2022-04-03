@@ -1,6 +1,6 @@
 <template>
   <v-card>
-      <v-card-title class="ml-5">Holinskiy Andriy</v-card-title>
+      <v-card-title class="ml-5">{{loggedUser.username}}</v-card-title>
        <v-tabs
           show-arrows
           centered
@@ -24,6 +24,7 @@
 <script>
 import userPosts from '@/components/Profile/user-posts';
 import userInfo from '@/components/Profile/user-info';
+import { mapGetters } from 'vuex';
 export default {
     components: {
         userPosts,
@@ -31,8 +32,10 @@ export default {
     },
     data: () => ({
         tab: ''
-    })
-
+    }),
+    computed: {
+      ...mapGetters(['loggedUser'])
+    }
 }
 </script>
 

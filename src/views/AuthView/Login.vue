@@ -83,7 +83,7 @@ export default {
           console.log(profileRes);
           this.updateInfo({
             userId: profileRes.result._id,
-            username: profileRes.result.email,
+            username: profileRes.result.username,
           });
           console.log(this.loggedUser);
           this.$router.push("/");
