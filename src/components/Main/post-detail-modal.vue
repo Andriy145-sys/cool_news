@@ -14,6 +14,16 @@
           />
           <v-card-text> {{ post.text }}</v-card-text></v-col
         >
+        <v-card-subtitle class="px-5">
+          <v-row justify="end">
+            <span>
+              {{ post.date_of_create }}
+            </span>
+          </v-row>
+          <v-row justify="start"
+            ><span> Author: {{ post.author_username }} </span>
+          </v-row>
+        </v-card-subtitle>
       </v-card>
     </v-dialog>
   </div>

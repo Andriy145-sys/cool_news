@@ -9,8 +9,19 @@
           ></v-img>
           <v-card-title>{{ post.title }}</v-card-title>
           <v-card-text
-            ><span>{{ post.text }}</span>
+            ><span class="text">{{ post.text }}</span>
           </v-card-text>
+
+          <v-card-subtitle class="px-5">
+             <v-row justify="end">
+            <span>
+              {{ post.date_of_create }}
+            </span>
+          </v-row>
+          <v-row justify="start"
+            ><span> Author: {{ post.author_username }} </span>
+          </v-row>
+          </v-card-subtitle>
         </v-card>
       </v-col>
       <post-detail-modal
@@ -31,6 +42,8 @@
 <script>
 import postDetailModal from "@/components/Main/post-detail-modal";
 import addNewPostModal from "@/components/Profile/add-new-post-modal";
+import postsService from "@/request/requests/postsService";
+
 export default {
   components: {
     postDetailModal,
@@ -51,11 +64,9 @@ export default {
   },
   methods: {
     async getDetailPost(id) {
-      this.postDetail = {
-        title: "Col",
-        text: "twfsdsfdsfdsfdf",
-      };
-      console.log(id);
+      const response = await postsService.getPostById(id);
+      console.log(response);
+      this.postDetail = response.result;
       if (this.type === "main") {
         this.visibleMainModal = true;
       }
@@ -68,4 +79,16 @@ export default {
 </script>
 
 <style>
+.text {
+  width: 100%;
+  overflow:hidden;
+  line-height: 2rem;
+  max-height: 4rem;
+  -webkit-box-orient: vertical;
+  display: block;
+  display: -webkit-box;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}
 </style>
