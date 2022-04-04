@@ -12,7 +12,7 @@
           label="Username"
           v-model="user.username"
           :error-messages="
-            usernameError.lenght ? usernameError : usernameErrorMsg
+            usernameError.length ? usernameError : usernameErrorMsg
           "
           @blur="$v.user.username.$touch()"
           @input="usernameErrorMsg"
@@ -24,8 +24,6 @@
           placeholder="Type here..."
           label="First name"
           v-model="user.first_name"
-          :error-messages="firstNameError"
-          @blur="$v.user.first_name.$touch()"
         />
         <v-text-field
           color="green"
@@ -34,8 +32,6 @@
           placeholder="Type here..."
           label="Last name"
           v-model="user.last_name"
-          :error-messages="lastNameError"
-          @blur="$v.user.last_name.$touch()"
         />
         <v-text-field
           color="green"
@@ -45,7 +41,7 @@
           label="Email"
           autocomplete="email"
           v-model="user.email"
-          :error-messages="emailError.lenght ? emailError : emailErrorMsg"
+          :error-messages="emailError.length ? emailError : emailErrorMsg"
           @blur="$v.user.email.$touch()"
           @input="emailErrorMsg = []"
         />
@@ -116,12 +112,6 @@ export default {
         required,
         email,
       },
-      first_name: {
-        required,
-      },
-      last_name: {
-        required,
-      },
       username: {
         required,
       },
@@ -179,28 +169,6 @@ export default {
       !this.$v.user.email.required && errors.push("Email is required");
       if (!this.$v.user.email.email) {
         errors.push("Email is incorrect");
-        return errors;
-      }
-      return errors;
-    },
-    firstNameError() {
-      const errors = [];
-      if (!this.$v.user.first_name.$dirty) {
-        return errors;
-      }
-      if (!this.$v.user.first_name.required) {
-        errors.push("First name is required");
-        return errors;
-      }
-      return errors;
-    },
-    lastNameError() {
-      const errors = [];
-      if (!this.$v.user.last_name.$dirty) {
-        return errors;
-      }
-      if (!this.$v.user.last_name.required) {
-        errors.push("Last name is required");
         return errors;
       }
       return errors;

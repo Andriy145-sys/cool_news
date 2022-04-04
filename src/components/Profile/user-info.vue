@@ -40,7 +40,7 @@
           label="Email"
           autocomplete="email"
           v-model="user.email"
-           :error-messages="emailError"
+          :error-messages="emailError"
           @blur="$v.user.email.$touch()"
         />
         <v-btn dark color="green" @click="updateUserInfo">Update</v-btn>
@@ -69,7 +69,7 @@
           :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="passwordVisible = !passwordVisible"
           :error-messages="passwordError"
-          :hide-details="password.password !== ''"
+          :hide-details="password.password !== '' && password.password.length < 8"
           @blur="$v.password.password.$touch()"
         />
         <password-helper :password="password.password" />
@@ -98,6 +98,8 @@
 import { validationMixin } from "vuelidate";
 import { required, sameAs, email } from "vuelidate/lib/validators";
 import passwordHelper from "../UI/password-helper.vue";
+import userService from "@/request/requests/userService";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: { passwordHelper },
   mixins: [validationMixin],
@@ -139,22 +141,47 @@ export default {
       },
     },
   },
+  mounted() {
+    this.getUserInfo();
+  },
   methods: {
-    updateUserInfo() {
+    ...mapActions(['updateInfo']),
+    async getUserInfo() {
+      let id = this.loggedUser.userId;
+      const response = await userService.getUserById(id);
+      this.user = response.result;
+      this.updateInfo({
+          userId: response.result._id,
+          username: response.result.username,
+        });
+    },
+    async updateUserInfo() {
       this.$v.user.$touch();
-      if(!this.$v.user.$invalid){
-        console.log("work")
+      if (!this.$v.user.$invalid) {
+        let id = this.loggedUser.userId;
+        const data = [];
+        data.username = this.user.username;
+        data.first_name = this.user.first_name;
+        data.last_name = this.user.last_name;
+        data.email = this.user.email;
+        await userService.updateUserData(id, { ...data });
+        this.getUserInfo();
       }
     },
-    updateUserPassword() {
+    async updateUserPassword() {
       this.$v.password.$touch();
-      if(!this.$v.password.$invalid){
-        console.log("work")
+      if (!this.$v.password.$invalid) {
+        let id = this.loggedUser.userId;
+        const data = [];
+        data.current_password = this.password.current_password;
+        data.password = this.password.password;
+        await userService.changePassword(id, {...data});
       }
     },
   },
   computed: {
-     emailError() {
+    ...mapGetters(["loggedUser"]),
+    emailError() {
       const errors = [];
       if (!this.$v.user.email.$dirty) {
         return errors;
