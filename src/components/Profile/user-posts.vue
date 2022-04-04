@@ -8,7 +8,13 @@
           >Add new post</v-btn
         ></v-row
       >
-      <posts-list :showLoader="showLoader" class="px-10" type="profile" :posts="posts" />
+      <posts-list
+        :showLoader="showLoader"
+        class="px-10"
+        type="profile"
+        :posts="posts"
+        @getPosts="getAutorPosts()"
+      />
       <v-pagination
         class="mt-5"
         v-model="page"
@@ -17,7 +23,11 @@
         color="green"
       />
     </v-col>
-    <add-new-post-modal :visible="visible" @close="visible = !visible" />
+    <add-new-post-modal
+      :visible="visible"
+      @close="visible = !visible"
+      @createPost="getAutorPosts(), visible = !visible"
+    />
   </div>
 </template>
 
@@ -33,7 +43,7 @@ export default {
   },
   data: () => ({
     page: 1,
-    pageCount: 0,
+    pageCount: 1,
     visible: false,
     showLoader: true,
     posts: [],
@@ -46,7 +56,9 @@ export default {
       let id = this.loggedUser.userId;
       const response = await postsService.getPostsByAuthor(id, this.page);
       this.posts = response.result;
-       this.pageCount = parseInt(response.total_items) / 10 + 1;
+      console.log(response);
+      this.pageCount = parseInt(response.total_items/ 10) + 1;
+      console.log(this.pageCount);
       this.showLoader = false;
     },
   },

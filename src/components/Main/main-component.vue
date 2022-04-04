@@ -27,7 +27,7 @@ export default {
       const response = await postsService.getAllPosts(this.page);
       console.log(response);
       this.posts = response.result;
-      this.pageCount = parseInt(response.total_items) / 10 + 1;
+      this.pageCount = parseInt(response.total_items / 10) + 1;
       this.showLoader = false
     }
   },

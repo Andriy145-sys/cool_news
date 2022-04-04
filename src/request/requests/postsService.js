@@ -2,7 +2,7 @@ import requestService from '../requestService';
 
 export default {
 	async createPost(data){
-		const response = await requestService.post(`posts/`, data)
+		const response = await requestService.post(`/posts/`, data)
 		return response?.data
 	},
     async updatePost(id,data){
@@ -18,7 +18,7 @@ export default {
 		return response?.data
 	},
 	async getPostById(id){
-		const response = await requestService.get(`/posts/${id}`)
+		const response = await requestService.get(`/posts/post/${id}`)
 		return response?.data
 	},
     async deletePost(id){

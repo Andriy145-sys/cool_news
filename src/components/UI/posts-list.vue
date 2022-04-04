@@ -42,6 +42,7 @@
         :post="postDetail"
         :visible="visibleProfileModal"
         @close="visibleProfileModal = !visibleProfileModal"
+        @getPosts="$emit('getPosts', visibleProfileModal = false)"
       />
     </v-row>
   </div>
@@ -76,8 +77,8 @@ export default {
   methods: {
     async getDetailPost(id) {
       const response = await postsService.getPostById(id);
-      console.log(response);
       this.postDetail = response.result;
+      console.log(this.postDetail);
       if (this.type === "main") {
         this.visibleMainModal = true;
       }
