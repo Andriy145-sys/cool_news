@@ -16,6 +16,7 @@
         @getPosts="getAutorPosts()"
       />
       <v-pagination
+        v-if="posts.length > 0"
         class="mt-5"
         v-model="page"
         :length="pageCount"

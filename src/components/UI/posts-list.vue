@@ -8,14 +8,14 @@
         color="green"
       ></v-progress-circular>
     </div>
+    <div v-else-if="posts.length == 0" class="d-flex align-center">
+      <span class="mx-auto" v-if="type == 'main'">There are no posts yet</span>
+       <span class="mx-auto" v-if="type == 'profile'">You don't have any posts yet</span>
+    </div>
     <v-row v-else style="justify: space-between">
       <v-col cols="6" lg="3" v-for="post in posts" :key="post._id">
         <v-card evalution="10" @click="getDetailPost(post._id)">
-          <v-img
-            height="150"
-            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-          ></v-img>
-          <v-card-title>{{ post.title }}</v-card-title>
+          <v-card-title class="title">{{ post.title }}</v-card-title>
           <v-card-text
             ><span class="text">{{ post.text }}</span>
           </v-card-text>
@@ -42,7 +42,7 @@
         :post="postDetail"
         :visible="visibleProfileModal"
         @close="visibleProfileModal = !visibleProfileModal"
-        @getPosts="$emit('getPosts', visibleProfileModal = false)"
+        @getPosts="$emit('getPosts', (visibleProfileModal = false))"
       />
     </v-row>
   </div>
@@ -103,7 +103,16 @@ export default {
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
 }
-.test:hover {
-  color: blue;
+.title {
+  width: 100%;
+  overflow: hidden;
+  line-height: 3rem;
+  max-height: 3rem;
+  -webkit-box-orient: vertical;
+  display: block;
+  display: -webkit-box;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
 }
 </style>

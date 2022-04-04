@@ -2,7 +2,7 @@
   <div>
     <v-card-title>Recent news</v-card-title>
     <posts-list :show-loader="showLoader" type="main" :posts="posts"/>
-    <v-pagination class="mt-5" v-model="page" :length="pageCount" circle color="green" />
+    <v-pagination class="mt-5" v-if="posts.length !== 0" v-model="page" :length="pageCount" circle color="green" />
   </div>
 </template>
 

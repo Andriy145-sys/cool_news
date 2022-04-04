@@ -44,7 +44,13 @@
               >
                 Delete
               </v-btn>
-              <v-btn color="green" dark @click="updatePost(posts._id), $emit('getPosts')"> Update </v-btn>
+              <v-btn
+                color="green"
+                dark
+                @click="updatePost(posts._id), $emit('getPosts')"
+              >
+                Update
+              </v-btn>
             </v-row>
           </v-row>
         </v-card-actions>
@@ -55,7 +61,7 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required } from "vuelidate/lib/validators";
+import { required, minLength } from "vuelidate/lib/validators";
 import postsService from "@/request/requests/postsService";
 import { mapGetters } from "vuex";
 export default {
@@ -70,6 +76,7 @@ export default {
       },
       text: {
         required,
+        minLength: minLength(50),
       },
     },
   },
@@ -96,24 +103,24 @@ export default {
         await postsService.createPost({ ...data });
         this.posts = {};
         this.$v.$reset();
-        this.$emit('createPost');
+        this.$emit("createPost");
       }
     },
     async updatePost(id) {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-         const data = [];
+        const data = [];
         data.title = this.posts.title;
         data.text = this.posts.text;
         data.author_id = this.loggedUser.userId;
         data.author_username = this.loggedUser.username;
-        await postsService.updatePost(id,{ ...data });
-        this.$emit('getPosts');
+        await postsService.updatePost(id, { ...data });
+        this.$emit("getPosts");
       }
     },
     async deletePost(id) {
       await postsService.deletePost(id);
-      this.$emit('getPosts');
+      this.$emit("getPosts");
     },
   },
   watch: {
@@ -150,6 +157,9 @@ export default {
         return errors;
       }
       !this.$v.posts.text.required && errors.push("Text is required");
+      !this.$v.posts.text.minLength &&
+        errors.push("Tou text must contain min 50 symbols");
+     
       return errors;
     },
   },

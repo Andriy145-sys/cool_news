@@ -14,8 +14,9 @@
             label="Email"
             autocomplete="email"
             v-model="user.email"
-            :error-messages="emailError"
+            :error-messages="emailError.length === 0 ? emailErrorMsg[0] : emailError"
             @blur="$v.user.email.$touch()"
+            @input="emailErrorMsg = []"
           />
           <v-text-field
             color="green"
@@ -27,8 +28,9 @@
             :type="passwordVisible ? 'text' : 'password'"
             :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="passwordVisible = !passwordVisible"
-            :error-messages="passwordError"
+            :error-messages="passwordError.length === 0 ? passwordErrorMsg : passwordError"
             @blur="$v.user.password.$touch()"
+            @input="passwordErrorMsg = []"
           />
           <v-btn class="mb-5" dark color="green" @click="login">Login</v-btn
           ><br />
@@ -55,6 +57,8 @@ export default {
   data: () => ({
     user: {},
     passwordVisible: false,
+    emailErrorMsg: [],
+    passwordErrorMsg: []
   }),
   validations: {
     user: {
@@ -77,6 +81,12 @@ export default {
         userData.password = this.user.password;
         const response = await authService.login({ ...userData });
         console.log(response);
+        if(response.status == 400 && response.error.type === "invalid email"){
+          this.emailErrorMsg.push("Invalid email")
+        }
+        if(response.status == 400 && response.error.type === "invalid password"){
+          this.passwordErrorMsg.push("Invalid password")
+        }
         if (response.status == 200) {
           console.log(response.result._id);
           const profileRes = await userService.getUserById(response.result._id);
