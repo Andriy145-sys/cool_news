@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_ENDPOINT = 'http://localhost:8000'
+//const API_ENDPOINT = 'http://localhost:8000'
+const API_ENDPOINT = 'https://coolnewsbackend.herokuapp.com/'
 
 export default {
 
